@@ -4,7 +4,7 @@ from fastapi import Depends, Request
 from internal.service.services import Services, new_services
 from internal.validation.users import UserRequest
 from pkg.auth.auth import CreateAccessToken
-from pkg.open_weather.api import ForecastData
+from pkg.open_weather.api import ForecastAPIData
 
 router = APIRouter()
 
@@ -26,5 +26,5 @@ def UserSignup(req: UserRequest, service: Services = Depends(new_services)):
 
 @router.get("/ping")
 def Ping(request: Request):
-    return {"message": "OK", "test_response": ForecastData("london"),
+    return {"message": "OK", "test_response": ForecastAPIData("london"),
             "authenticated_user": getattr(request.state, 'user', None)}
