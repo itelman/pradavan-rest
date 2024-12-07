@@ -1,5 +1,5 @@
 import jwt
-from fastapi import Request, FastAPI
+from fastapi import Request, FastAPI, Depends
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from internal.repository.models.errors import ForbiddenError, UnauthorizedError
@@ -8,9 +8,9 @@ from pkg.auth.auth import DecodeAccessToken
 
 
 class BaseServiceMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: FastAPI, services: Services):
+    def __init__(self, app: FastAPI, services: Services = Depends(new_services)):
         super().__init__(app)
-        self.services = new_services
+        self.services = services
 
 
 class LogRequestMiddleware(BaseServiceMiddleware):
