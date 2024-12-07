@@ -12,7 +12,7 @@ This app fetches weather forecasts from OpenWeather API and manages them in SQLi
 
 ## How to run
 
-Use the link: ()[]
+Use the link: (https://pradavan-rest.onrender.com)[https://pradavan-rest.onrender.com]
 
 Or...
 
