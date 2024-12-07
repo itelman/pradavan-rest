@@ -10,7 +10,6 @@ API_KEY = os.getenv("API_KEY")
 
 class ForecastData:
     city: str
-    json_data: Any
     temp: float
     pressure: int
     humidity: int
@@ -25,6 +24,8 @@ class ForecastData:
 
 
 class ForecastAPIData(ForecastData):
+    json_data: Any
+    
     def __init__(self, city: str):
         params = {"q": city, "appid": API_KEY}
         response = requests.get(url, params=params)

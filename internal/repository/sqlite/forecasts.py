@@ -20,6 +20,7 @@ class ForecastRepository:
 
             self.db.add(new_forecast)
             self.db.commit()
+            self.db.refresh(new_forecast)
 
             return new_forecast.id
         except Exception as e:
