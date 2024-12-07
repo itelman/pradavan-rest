@@ -18,11 +18,11 @@ class UserService:
             user = self.user_repository.ReadByUsername(username)
 
             if not bcrypt.checkpw(password.encode('utf-8'), user.hashed_password.encode('utf-8')):
-                raise UnauthorizedError()
+                raise UnauthorizedError("Invalid Credentials")
 
             return user
         except NotFoundError:
-            raise UnauthorizedError()
+            raise UnauthorizedError("Invalid Credentials")
         except Exception as e:
             raise e
 

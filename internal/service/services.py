@@ -10,6 +10,7 @@ from pkg.store.sql import NewSQL
 class Services:
     user_service: UserService
     forecast_service: ForecastService
+    loggers: Logger
 
     def __init__(self, logger: Logger):
         self.loggers = logger

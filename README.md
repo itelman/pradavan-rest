@@ -46,6 +46,17 @@ fastapi dev main.py
 
 ### Service: Users
 
+- **Endpoint: /ping**:
+    - Method: GET
+    - Response:
+  ```json
+  {
+    "message": "OK",
+    "test_response": dict{},
+    "authenticated_user": dict{}
+  }
+  ```
+
 - **Endpoint: /signup**:
     - Method: POST
     - Type: JSON

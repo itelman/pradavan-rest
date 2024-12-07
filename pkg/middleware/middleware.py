@@ -33,7 +33,7 @@ class Authenticate(BaseServiceMiddleware):
                 user = self.services.user_service.Get(user_id)
                 req.state.user = user
             except jwt.ExpiredSignatureError:
-                raise UnauthorizedError
+                raise UnauthorizedError("Session Expired")
             except Exception as e:
                 raise e
 
@@ -53,6 +53,6 @@ class VerifyAuthentication(BaseServiceMiddleware):
         else:
             # Prevent unauthenticated users from accessing /user endpoints
             if request.url.path.startswith("/user"):
-                raise UnauthorizedError()
+                raise UnauthorizedError("User Not Authenticated")
 
         return response

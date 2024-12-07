@@ -6,7 +6,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
 
-from internal.repository.models.errors import UnauthorizedError, ForbiddenError
+from internal.repository.models.errors import UnauthorizedError, ForbiddenError, NotFoundError
 from internal.service.services import Services, new_services
 
 
@@ -37,6 +37,12 @@ def UnauthorizedErrorHandler(req: Request, exc: UnauthorizedError):
 
 def ForbiddenErrorHandler(req: Request, exc: ForbiddenError):
     err = HTTPStatus.FORBIDDEN
+
+    return DefaultErrorHandler(err, str(exc))
+
+
+def NotFoundHandler(req: Request, exc: NotFoundError):
+    err = HTTPStatus.NOT_FOUND
 
     return DefaultErrorHandler(err, str(exc))
 
