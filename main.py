@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from internal.handlers.errors import UnauthorizedErrorHandler, ForbiddenErrorHandler, ConflictErrorHandler, \
     InternalServerHandler, ValidationErrorHandler, NotFoundHandler
@@ -17,7 +17,7 @@ app.add_exception_handler(UnauthorizedError, UnauthorizedErrorHandler)
 app.add_exception_handler(ForbiddenError, ForbiddenErrorHandler)
 app.add_exception_handler(IntegrityError, ConflictErrorHandler)
 app.add_exception_handler(NotFoundError, NotFoundHandler)
-app.add_exception_handler(Exception, InternalServerHandler)
+app.add_exception_handler(SQLAlchemyError, InternalServerHandler)
 
 app.add_middleware(LogRequestMiddleware, services=new_services)
 app.add_middleware(Authenticate, services=new_services)
