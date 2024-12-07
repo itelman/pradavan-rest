@@ -1,9 +1,10 @@
+import os
 from datetime import datetime, timedelta
 
 import jwt
 
 # JWT Config
-SECRET_KEY = "9b1c865c5082469b3a3fd3d5ae49d546baf3a2d7258cbe3f60503c8bc17d5e5b"
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_SECONDS = 3600
 

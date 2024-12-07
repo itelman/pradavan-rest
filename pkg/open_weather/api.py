@@ -1,10 +1,11 @@
+import os
 from typing import Any
 
 import requests
 from fastapi import HTTPException
 
 url = "https://api.openweathermap.org/data/2.5/weather"
-API_KEY = "6484d54b15eea1b329ace327ed6d7832"
+API_KEY = os.getenv("API_KEY")
 
 
 class ForecastData:
