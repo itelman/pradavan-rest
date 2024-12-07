@@ -160,7 +160,7 @@ fastapi dev main.py
   }
   ```
 
-- **Endpoint: /user/forecasts/{id} --> UPDATE FORECAST**:
+- **Endpoint: /user/forecasts/{id} --> UPDATE FORECAST MANUALLY**:
     - Method: PUT
     - Type: JSON
     - Request:
@@ -172,6 +172,16 @@ fastapi dev main.py
      "description": "string"
    }
   ```
+    - Response:
+  ```json
+  {
+    "message": "OK"
+  }
+  ```
+
+- **Endpoint: /user/forecasts/api/{id} --> UPDATE FORECAST THROUGH API**:
+    - Method: PUT
+    - Request: None
     - Response:
   ```json
   {

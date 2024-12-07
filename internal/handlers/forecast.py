@@ -41,6 +41,15 @@ def Update(id: int, req: ForecastRequest, service: Services = Depends(new_servic
     return {"message": "OK"}
 
 
+@router.put(forecasts_url + "/api/{id}")
+def UpdateAPI(id: int, service: Services = Depends(new_services)):
+    db_data = service.forecast_service.Get(id)
+    forecast_data = ForecastAPIData(db_data.city)
+    service.forecast_service.Update(id, forecast_data)
+
+    return {"message": "OK"}
+
+
 @router.delete(forecasts_url + "/{id}")
 def Delete(id: int, service: Services = Depends(new_services)):
     service.forecast_service.Delete(id)
