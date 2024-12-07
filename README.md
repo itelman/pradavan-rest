@@ -12,7 +12,7 @@ This app fetches weather forecasts from OpenWeather API and manages them in SQLi
 
 ## How to run
 
-Use the link: (https://pradavan-rest.onrender.com)[https://pradavan-rest.onrender.com]
+Use the link: [https://pradavan-rest.onrender.com](https://pradavan-rest.onrender.com)
 
 Or...
 
@@ -36,10 +36,10 @@ fastapi dev main.py
 
 ## How to use:
 
-1. Register through "/signup" endpoint (see 'Endpoints' section)
-2. Authenticate through "/login" endpoint
+1. Register through **/signup** endpoint (see 'Endpoints' section)
+2. Authenticate through **/login** endpoint
 3. Copy the access token from the JSON response
-4. For all next requests, set in headers -> ["Authorization": "Bearer {your_access_token}"]
+4. For all next requests, set in headers -> **{"Authorization": "Bearer {your_access_token}"}**
 5. Enjoy!
 
 ## Endpoints
