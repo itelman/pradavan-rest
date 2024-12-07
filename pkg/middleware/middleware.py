@@ -2,6 +2,7 @@ import jwt
 from fastapi import Request, FastAPI, Depends
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from internal.handlers.errors import ForbiddenErrorHandler, UnauthorizedErrorHandler, InternalServerHandler
 from internal.repository.models.errors import ForbiddenError, UnauthorizedError
 from internal.service.services import Services, new_services
 from pkg.auth.auth import DecodeAccessToken
@@ -32,10 +33,10 @@ class Authenticate(BaseServiceMiddleware):
 
                 user = self.services.user_service.Get(user_id)
                 req.state.user = user
-            except jwt.ExpiredSignatureError:
-                raise UnauthorizedError("Session Expired")
+            except jwt.PyJWTError:
+                return UnauthorizedErrorHandler(req, UnauthorizedError("Session Invalid"))
             except Exception as e:
-                raise e
+                return InternalServerHandler(req, e)
 
         # Proceed to the next middleware or endpoint
         response = await call_next(req)
@@ -49,10 +50,11 @@ class VerifyAuthentication(BaseServiceMiddleware):
         user = getattr(request.state, 'user', None)
         if user:
             if request.url.path.startswith("/login") or request.url.path.startswith("/signup"):
-                raise ForbiddenError("User Authenticated")
+                return ForbiddenErrorHandler(request, ForbiddenError("User Authenticated"))
+
         else:
             # Prevent unauthenticated users from accessing /user endpoints
             if request.url.path.startswith("/user"):
-                raise UnauthorizedError("User Not Authenticated")
+                return UnauthorizedErrorHandler(request, UnauthorizedError("User Not Authenticated"))
 
         return response

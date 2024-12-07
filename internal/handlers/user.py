@@ -32,5 +32,5 @@ def Ping(request: Request):
 
 
 @router.get("/")
-def Ping(request: Request):
+def Ping():
     return RedirectResponse(url="/ping")
