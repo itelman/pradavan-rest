@@ -2,7 +2,8 @@ from fastapi import APIRouter
 from fastapi import Depends
 
 from internal.service.services import Services, new_services
-from pkg.open_weather.api import ForecastData
+from internal.validation.forecasts import ForecastRequest
+from pkg.open_weather.api import ForecastData, ForecastAPIData
 
 router = APIRouter()
 
@@ -11,7 +12,7 @@ forecasts_url = "/user/forecasts"
 
 @router.get(forecasts_url + "/create")
 def Create(city: str, service: Services = Depends(new_services)):
-    forecast_data = ForecastData(city)
+    forecast_data = ForecastAPIData(city)
     forecast_id = service.forecast_service.Create(forecast_data)
 
     return {"message": "OK", "forecast_id": forecast_id}
@@ -32,9 +33,9 @@ def GetAll(service: Services = Depends(new_services)):
 
 
 @router.put(forecasts_url + "/{id}")
-def Update(id: int, service: Services = Depends(new_services)):
+def Update(id: int, req: ForecastRequest, service: Services = Depends(new_services)):
     db_data = service.forecast_service.Get(id)
-    forecast_data = ForecastData(db_data.city)
+    forecast_data = ForecastData(db_data.city, req.temp, req.pressure, req.humidity, req.description)
     service.forecast_service.Update(id, forecast_data)
 
     return {"message": "OK"}

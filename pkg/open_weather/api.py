@@ -16,9 +16,16 @@ class ForecastData:
     humidity: int
     description: str
 
-    def __init__(self, city: str):
+    def __init__(self, city, temp, pressure, humidity, description):
         self.city = city
+        self.temp = temp
+        self.pressure = pressure
+        self.humidity = humidity
+        self.description = description
 
+
+class ForecastAPIData(ForecastData):
+    def __init__(self, city: str):
         params = {"q": city, "appid": API_KEY}
         response = requests.get(url, params=params)
 
@@ -28,7 +35,9 @@ class ForecastData:
             raise HTTPException(status_code=response.status_code)
 
         main = self.json_data.get("main")
-        self.temp = main.get("temp")
-        self.pressure = main.get("pressure")
-        self.humidity = main.get("humidity")
-        self.description = self.json_data.get("weather")[0].get("description")
+        temp = main.get("temp")
+        pressure = main.get("pressure")
+        humidity = main.get("humidity")
+        description = self.json_data.get("weather")[0].get("description")
+
+        super().__init__(city, temp, pressure, humidity, description)

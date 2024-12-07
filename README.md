@@ -46,8 +46,9 @@ fastapi dev main.py
 
 ### Service: Users
 
-- **Endpoint: /ping**:
+- **Endpoint: /ping --> TEST API CONNECTION**:
     - Method: GET
+    - Request: None
     - Response:
   ```json
   {
@@ -57,9 +58,10 @@ fastapi dev main.py
   }
   ```
 
-- **Endpoint: /signup**:
+- **Endpoint: /signup --> REGISTER USER**:
     - Method: POST
     - Type: JSON
+    - Request:
   ```json
   {
     "username": "string",
@@ -74,9 +76,10 @@ fastapi dev main.py
   ```
     - Errors: 409, 422
 
-- **Endpoint: /login**:
+- **Endpoint: /login --> LOGIN USER**:
     - Method: POST
     - Type: JSON
+    - Request:
   ```json
   {
     "username": "string",
@@ -95,8 +98,9 @@ fastapi dev main.py
 
 ### Service: Forecasts
 
-- **Endpoint: /user/forecasts/create?city={city_name}**:
+- **Endpoint: /user/forecasts/create?city={city_name} --> CREATE FORECAST**:
     - Method: GET
+    - Request: None
     - Response:
   ```json
   {
@@ -105,8 +109,9 @@ fastapi dev main.py
   }
   ```
 
-- **Endpoint: /user/forecasts/{id}**:
+- **Endpoint: /user/forecasts/{id} --> GET FORECAST**:
     - Method: GET
+    - Request: None
     - Response (200 OK):
   ```json
    {
@@ -119,8 +124,9 @@ fastapi dev main.py
    }
   ```
 
-- **Endpoint: /user/forecasts**:
+- **Endpoint: /user/forecasts --> GET ALL FORECASTS**:
     - Method: GET
+    - Request: None
     - Response (200 OK):
   ```json
   [
@@ -144,8 +150,9 @@ fastapi dev main.py
   ]
   ```
 
-- **Endpoint: /user/forecasts/{id}**:
+- **Endpoint: /user/forecasts/{id} --> DELETE FORECAST**:
     - Method: DELETE
+    - Request: None
     - Response:
   ```json
   {
@@ -153,8 +160,18 @@ fastapi dev main.py
   }
   ```
 
-- **Endpoint: /user/forecasts/{id}**:
+- **Endpoint: /user/forecasts/{id} --> UPDATE FORECAST**:
     - Method: PUT
+    - Type: JSON
+    - Request:
+  ```json
+   {
+     "temp": "float",
+     "pressure": "int",
+     "humidity": "int",
+     "description": "string"
+   }
+  ```
     - Response:
   ```json
   {
