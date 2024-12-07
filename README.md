@@ -94,7 +94,7 @@ fastapi dev main.py
     "token_type": "bearer"
   }
   ```
-    - Errors: 401
+    - Errors: 401, 422
 
 ### Service: Forecasts
 

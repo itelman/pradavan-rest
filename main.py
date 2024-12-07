@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
@@ -11,6 +12,8 @@ from internal.service.services import new_services
 from pkg.middleware.middleware import Authenticate, VerifyAuthentication, LogRequestMiddleware
 
 app = FastAPI()
+
+load_dotenv()
 
 app.add_middleware(LogRequestMiddleware, services=new_services)
 app.add_middleware(Authenticate, services=new_services)

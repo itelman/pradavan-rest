@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 
-from internal.repository.models.users import User
 from internal.repository.sqlite.forecasts import ForecastRepository
 from pkg.open_weather.api import ForecastData
 
@@ -13,7 +12,7 @@ class ForecastService:
         city, temp, pressure, humidity, description = data.city.capitalize(), data.temp, data.pressure, data.humidity, data.description
         return self.forecast_repository.Create(city, temp, pressure, humidity, description)
 
-    def Get(self, id: int) -> User:
+    def Get(self, id: int):
         return self.forecast_repository.ReadByID(id)
 
     def Delete(self, id: int):

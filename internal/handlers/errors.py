@@ -17,16 +17,22 @@ def DefaultErrorHandler(err: HTTPStatus, details, request=None):
 
 async def ValidationErrorHandler(req: Request, exc: RequestValidationError):
     err = HTTPStatus.UNPROCESSABLE_ENTITY
-    body = await req.json()
+    data = None
+    body = await req.body()
+    if body:
+        data = await req.json()
 
-    return DefaultErrorHandler(err, exc.errors(), body)
+    return DefaultErrorHandler(err, exc.errors(), data)
 
 
 async def ConflictErrorHandler(req: Request, exc: IntegrityError):
     err = HTTPStatus.CONFLICT
-    body = await req.json()
+    data = None
+    body = await req.body()
+    if body:
+        data = await req.json()
 
-    return DefaultErrorHandler(err, str(exc.orig), body)
+    return DefaultErrorHandler(err, str(exc.orig), data)
 
 
 def UnauthorizedErrorHandler(req: Request, exc: UnauthorizedError):

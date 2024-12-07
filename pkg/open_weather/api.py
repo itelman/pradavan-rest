@@ -8,6 +8,17 @@ url = "https://api.openweathermap.org/data/2.5/weather"
 API_KEY = os.getenv("API_KEY")
 
 
+def get_response(city: str):
+    params = {"q": city, "appid": API_KEY}
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:
+        json_data = response.json()
+        return json_data
+    else:
+        raise HTTPException(status_code=response.status_code)
+
+
 class ForecastData:
     city: str
     temp: float
@@ -25,16 +36,9 @@ class ForecastData:
 
 class ForecastAPIData(ForecastData):
     json_data: Any
-    
+
     def __init__(self, city: str):
-        params = {"q": city, "appid": API_KEY}
-        response = requests.get(url, params=params)
-
-        if response.status_code == 200:
-            self.json_data = response.json()
-        else:
-            raise HTTPException(status_code=response.status_code)
-
+        self.json_data = get_response(city)
         main = self.json_data.get("main")
         temp = main.get("temp")
         pressure = main.get("pressure")
