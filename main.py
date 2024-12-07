@@ -12,16 +12,16 @@ from pkg.middleware.middleware import Authenticate, VerifyAuthentication, LogReq
 
 app = FastAPI()
 
+app.add_middleware(LogRequestMiddleware, services=new_services)
+app.add_middleware(Authenticate, services=new_services)
+app.add_middleware(VerifyAuthentication, services=new_services)
+
 app.add_exception_handler(RequestValidationError, ValidationErrorHandler)
 app.add_exception_handler(UnauthorizedError, UnauthorizedErrorHandler)
 app.add_exception_handler(ForbiddenError, ForbiddenErrorHandler)
 app.add_exception_handler(IntegrityError, ConflictErrorHandler)
 app.add_exception_handler(NotFoundError, NotFoundHandler)
 app.add_exception_handler(SQLAlchemyError, InternalServerHandler)
-
-app.add_middleware(LogRequestMiddleware, services=new_services)
-app.add_middleware(Authenticate, services=new_services)
-app.add_middleware(VerifyAuthentication, services=new_services)
 
 app.include_router(user_router)
 app.include_router(forecast_router)

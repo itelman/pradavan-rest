@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Depends, Request
+from starlette.responses import RedirectResponse
 
 from internal.service.services import Services, new_services
 from internal.validation.users import UserRequest
@@ -28,3 +29,8 @@ def UserSignup(req: UserRequest, service: Services = Depends(new_services)):
 def Ping(request: Request):
     return {"message": "OK", "test_response": ForecastAPIData("london"),
             "authenticated_user": getattr(request.state, 'user', None)}
+
+
+@router.get("/")
+def Ping(request: Request):
+    return RedirectResponse(url="/ping")
